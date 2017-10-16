@@ -29,8 +29,7 @@ class Flight:
         return self._aircraft.seating_plan()
 
     def allocate_seat(self, seat, passenger):
-        row = int(seat[:-1])
-        letter = seat[-1]
+        row, letter = self._parse(seat)
 
         allocated_passenger = self._seating[row][letter]
         if allocated_passenger is not None:
@@ -38,6 +37,11 @@ class Flight:
                 "Seat: {0} already occupied by passenger: {1}".format(seat, allocated_passenger))
 
         self._seating[row][letter] = passenger
+
+    def _parse(self, seat):
+        row = int(seat[:-1])
+        letter = seat[-1]
+        return row, letter
 
 
 class Aircraft:
