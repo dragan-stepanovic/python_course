@@ -28,6 +28,29 @@ class Flight:
     def seating_plan(self):
         return self._aircraft.seating_plan()
 
+    def relocate_passenger(self, old_seat, new_seat, passenger):
+        if not self.seat_allocated_for_passenger(old_seat, passenger):
+            raise ValueError(
+                "Seat: {0} is not allocated for a passenger: {1}".format(old_seat, passenger))
+
+        if self.seat_already_allocated(new_seat):
+            raise ValueError("Seat: {0} is already allocated".format(new_seat))
+
+        self.allocate_seat(new_seat, passenger)
+        self.delocate_seat(old_seat)
+
+    def seat_allocated_for_passenger(self, seat, passenger):
+        row, letter = self._parse(seat)
+        return self._seating[row][letter] == passenger
+
+    def seat_already_allocated(self, seat):
+        row, letter = self._parse(seat)
+        return self._seating[row][letter] != None
+
+    def delocate_seat(self, seat):
+        row, letter = self._parse(seat)
+        self._seating[row][letter] = None
+
     def allocate_seat(self, seat, passenger):
         row, letter = self._parse(seat)
 
