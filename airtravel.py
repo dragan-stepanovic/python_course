@@ -74,3 +74,13 @@ class Aircraft:
 
     def seating_plan(self):
         return (range(1, self._num_rows + 1), "ABCDEFGHJK"[:self._num_seats_per_row])
+
+
+def make_flight():
+    f = Flight("BG-101", Aircraft(12, 4))
+    f.allocate_seat("1A", "Dragan")
+    f.allocate_seat("2B", "Dejan")
+    f.allocate_seat("3C", "Gordana")
+    f.allocate_seat("4D", "Goran")
+    f.allocate_seat("10A", "Jelena")
+    return f
