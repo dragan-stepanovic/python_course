@@ -61,6 +61,11 @@ class Flight:
 
         self._seating[row][letter] = passenger
 
+    # this is some HC shit with generator comprehensions
+    def num_available_seats(self):
+        return sum(sum(1 for seat in row.values() if seat is None)
+                   for row in self._seating if row is not None)
+
     def _parse(self, seat):
         row = int(seat[:-1])
         letter = seat[-1]
@@ -77,7 +82,7 @@ class Aircraft:
 
 
 def make_flight():
-    f = Flight("BG-101", Aircraft(12, 4))
+    f = Flight("BG101", Aircraft(12, 4))
     f.allocate_seat("1A", "Dragan")
     f.allocate_seat("2B", "Dejan")
     f.allocate_seat("3C", "Gordana")
